@@ -14,10 +14,10 @@ sudo apt-get install -y apache2 php5 php5-json php-xml-parser php5-gd php5-sqlit
 cd Downloads
 #
 #
-wget http://download.owncloud.org/releases/owncloud-4.5.6.tar.bz2
+wget http://download.owncloud.org/releases/owncloud-4.5.7.tar.bz2
 #
 #
-tar -jxvf owncloud-4.5.6.tar.bz2
+tar -jxvf owncloud-4.5.7.tar.bz2
 #
 #
 cp -r owncloud /var/www/owncloud
