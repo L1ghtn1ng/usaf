@@ -4,25 +4,6 @@
 #
 #
 #
-clear
-echo -e "\e[1;32m
- #####                                      ###                      
-#     # #   #  ####  ##### ###### #    #     #  #    # ######  ####  
-#        # #  #        #   #      ##  ##     #  ##   # #      #    # 
- #####    #    ####    #   #####  # ## #     #  # #  # #####  #    # 
-      #   #        #   #   #      #    #     #  #  # # #      #    # 
-#     #   #   #    #   #   #      #    #     #  #   ## #      #    # 
- #####    #    ####    #   ###### #    #    ### #    # #       ####\e[0m" 
-echo
-echo 
-echo -e "\e[1;34mCreated by Jay Townsend\e[0m"
-echo
-echo -e "\e[1;33m[*]This script depends on acpi being installed[*]\e[0m"
-echo
-echo -e "\e[1;33m[*]Retreving Your Information You Have Requested[*]\e[0m"
-echo
-#
-#
 #These are the variables I have set Do Not Change these unless you know what you are doing 
 CpuName=`cat /proc/cpuinfo > cpuinfo.txt; cat cpuinfo.txt | sort | uniq -c | grep 'name' | cut -d ':' -f2; rm cpuinfo.txt`
 Cpucores=`cat /proc/cpuinfo > cpuinfo.txt; cat cpuinfo.txt | sort | uniq -c | grep 'cores' | cut -d ':' -f2; rm cpuinfo.txt`
@@ -52,7 +33,31 @@ Essid=`iwconfig > essid.txt 2>/dev/null; cat essid.txt | grep 'ESSID' | awk '{pr
 #
 #
 #
-echo -e "\e[1;32m====================================\e[0m"
+banner()
+{
+clear
+echo -e "\e[1;32m
+ #####                                      ###                      
+#     # #   #  ####  ##### ###### #    #     #  #    # ######  ####  
+#        # #  #        #   #      ##  ##     #  ##   # #      #    # 
+ #####    #    ####    #   #####  # ## #     #  # #  # #####  #    # 
+      #   #        #   #   #      #    #     #  #  # # #      #    # 
+#     #   #   #    #   #   #      #    #     #  #   ## #      #    # 
+ #####    #    ####    #   ###### #    #    ### #    # #       ####\e[0m" 
+echo
+echo 
+echo -e "\e[1;34mCreated by Jay Townsend\e[0m"
+echo
+echo -e "\e[1;33m[*]This script depends on acpi being installed[*]\e[0m"
+echo
+echo -e "\e[1;33m[*]Retreving Your Information You Have Requested[*]\e[0m"
+echo
+echo -e "\e[1;32m===================================================\e[0m"
+}
+
+hardware_menu()
+{
+clear
 echo -e "\e[1;31mCpu Model:\e[0m" $CpuName
 echo -e "\e[1;31mCpu Cores:\e[0m" $Cpucores
 echo -e "\e[1;31mCpu Threads:\e[0m" $Cputhreads
@@ -66,6 +71,27 @@ echo -e "\e[1;31mRam Type:\e[0m" $RamType
 echo -e "\e[1;31mRam Speed:\e[0m" $RamSpeed
 echo -e "\e[1;31mMax Ram Supported:\e[0m" $RamSupported
 echo -e "\e[1;31mKernel Version:\e[0m" $Kernelversion
+echo -e "\e[1;31mBattery:\e[0m" $Battery
+echo
+echo -e "\e[1;31m99) Return to previous menu\e[0m"
+echo
+echo -ne "\e[1;33m[*]Enter 99 to return to menu\e[0m "
+
+read choice
+
+case $choice in
+	99)
+	menu
+	;;
+	*)
+	error
+	;;
+esac
+}
+
+network_menu()
+{
+clear
 echo -e "\e[1;31mName:\e[0m" $LoginName
 echo -e "\e[1;31mUser:\e[0m" $User
 echo -e "\e[1;31mLocal IP:\e[0m" $IP
@@ -77,4 +103,63 @@ echo -e "\e[1;31mWlan0 Mac:\e[0m" $Wlan0mac
 echo -e "\e[1;31mComputer Name:\e[0m" $Computername
 echo -e "\e[1;31mOS Release:\e[0m" $Os
 echo -e "\e[1;31mOS Codename:\e[0m" $codename
-echo -e "\e[1;31mBattery:\e[0m" $Battery
+echo
+echo -e "\e[1;31m99) Return to previous menu\e[0m"
+echo
+echo -ne "\e[1;33m[*]Enter 99 to return to menu\e[0m "
+
+read choice
+
+case $choice in
+	99)
+	menu
+	;;
+	*)
+	error
+	;;
+esac
+}
+
+menu()
+{
+banner
+echo
+echo
+echo -e "\e[1;31m1) Hardware menu\e[0m"
+echo -e "\e[1;31m2) Network menu\e[0m"
+echo
+echo -e "\e[1;31m0) Exit\e[0m"
+echo
+echo -ne "\e[1;33m[*]Please select a number from menu, then [enter]:\e[0m "
+
+read choice
+
+case $choice in
+	1)
+	hardware_menu
+	;;
+	2)
+	network_menu
+	;;
+	0)
+	break
+	;;
+	*)
+	error
+	;;
+esac
+}
+
+error()
+{
+echo
+echo -e "\e[1;31mError, that is not a valid choice or Input, Returning to menu\e[0m"
+sleep 3
+}
+
+# program start
+
+while :
+do
+menu
+done
