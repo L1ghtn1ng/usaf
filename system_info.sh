@@ -73,7 +73,6 @@ echo -e "\e[1;31mMax Ram Supported:\e[0m" $RamSupported
 echo -e "\e[1;31mKernel Version:\e[0m" $Kernelversion
 echo -e "\e[1;31mBattery:\e[0m" $Battery
 echo
-echo -e "\e[1;31m99) Return to previous menu\e[0m"
 echo
 echo -ne "\e[1;33m[*]Enter 99 to return to menu\e[0m "
 
@@ -104,7 +103,6 @@ echo -e "\e[1;31mComputer Name:\e[0m" $Computername
 echo -e "\e[1;31mOS Release:\e[0m" $Os
 echo -e "\e[1;31mOS Codename:\e[0m" $codename
 echo
-echo -e "\e[1;31m99) Return to previous menu\e[0m"
 echo
 echo -ne "\e[1;33m[*]Enter 99 to return to menu\e[0m "
 
