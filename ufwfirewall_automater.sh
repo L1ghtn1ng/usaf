@@ -107,7 +107,7 @@ malware_ipban()
 echo
 echo -e "\e[1;33mEnter Your Local Lan IP Range\e[0m"
 echo -e "\e[1;33mFor example if its 192.168.0.0/24 then enter the example\e[0m"
-echo -e "\e[1;33mPlease do not forget to add the /24 or whatever yours is this is Important\e[0m"
+echo -e "\e[1;33mPlease do not forget to add the /24 this is Important\e[0m"
 read lanip
 cat malwareipban.txt | while read ipban
 do
