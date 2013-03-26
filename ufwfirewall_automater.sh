@@ -17,7 +17,8 @@ menu()
 	banner
 	echo -e "\e[1;31m1) Turn Ufw On\e[0m"
 	echo -e "\e[1;31m2) Add Rules\e[0m"
-	echo -e "\e[1;31m3) Reset Rules\e[0m"
+	echo -e "\e[1;31m3) Reset Ufw\e[0m"
+	echo -e "\e[1;31m4) Delete Rules\e[0m"
 	echo -e "\e[1;31m0) Quit\e[0m"
 	echo
 	echo
@@ -34,6 +35,9 @@ case $Input in
 		;;
 		3)
 		reset_rule
+		;;
+		4)
+		delete_rules
 		;;
 		0)
 		break
@@ -87,13 +91,52 @@ add_rule()
 
 reset_rule()
 {
-	echo
+	sudo ufw reset
+}
+
+delete_rules()
+{
+	banner
+	sudo ufw status numbered
+	echo -ne "\e[1;33m[*]Enter the rule number to delete\e[0m "
+	read Input
+	sudo ufw delete RULE $Input
 }
 
 in_rule()
 {
-	echo -e "\e[1;33m Enter Your Incoming Rule\e[0m"
+	banner
+	echo -e "\e[1;31m1) Allow HTTP In\e[0m"
+	echo -e "\e[1;31m2) Allow HTTPS In\e[0m"
+	echo -e "\e[1;31m3) Allow SSH In\e[0m"
+	echo -e "\e[1;31m4) Allow FTP In\e[0m"
+	echo
+	echo -e "\e[1;31m99) Return to menu\e[0m"
+	echo
+	echo
+	echo -ne "\e[1;33m[*]Select a number from menu, then [enter]:\e[0m "
 	read Input
+
+	case $Input in
+		1)
+		sudo ufw allow "in" http
+		;;
+		2)
+		sudo ufw allow "in" https
+		;;
+		3)
+		sudo ufw allow "in" ssh
+		;;
+		4)
+		sudo ufw allow "in" ftp
+		;;
+		99)
+		menu
+		;;
+		*)
+		error
+		;;
+	esac
 }
 
 out_rule()
@@ -104,6 +147,7 @@ echo
 
 malware_ipban()
 {
+banner
 echo
 echo -e "\e[1;33mEnter Your Local Lan IP Range\e[0m"
 echo -e "\e[1;33mFor example if its 192.168.0.0/24 then enter the example\e[0m"
@@ -118,7 +162,7 @@ done
 error()
 {
 	echo
-	echo -e "\e[1;31mError, Please Select a number from menu\e[0m"
+	echo -e "\e[1;31mError, Please Select a number from the menu\e[0m"
 	sleep 3
 }
 	##
