@@ -1,7 +1,7 @@
 #!/bin/bash
-#
-#
-#
+#If you use any of my code
+#Please give credit thank
+#you
 #
 banner()
 {
@@ -28,23 +28,17 @@ menu()
 
 case $Input in
 		1)
-		ufw_on
-		;;
+		ufw_on;;
 		2)
-		add_rule
-		;;
+		add_rule;;
 		3)
-		reset_rule
-		;;
+		reset_rule;;
 		4)
-		delete_rules
-		;;
+		delete_rules;;
 		0)
-		break
-		;;
+		break;;
 		*)
-		error
-		;;
+		error;;
 esac
 }
 
@@ -58,6 +52,7 @@ ufw_on()
 
 add_rule()
 {
+	banner
 	echo -e "\e[1;31m1) Set Incoming Rule\e[0m"
 	echo -e "\e[1;31m2) Set Outcoming Rule\e[0m"
 	echo -e "\e[1;31m3) Block Malware Websites\e[0m"
@@ -71,26 +66,22 @@ add_rule()
 
 	case $Input in
 			1)
-			in_rule
-			;;
+			in_rule;;
 			2)
-			out_rule
-			;;
+			out_rule;;
 			3)
-			malware_ipban
-			;;
+			malware_ipban;;
 			99)
-			menu
-			;;
+			menu;;
 			*)
-			error
-			;;
+			error;;
 	esac
 
 }
 
 reset_rule()
 {
+	banner
 	sudo ufw reset
 }
 
@@ -110,6 +101,7 @@ in_rule()
 	echo -e "\e[1;31m2) Allow HTTPS In\e[0m"
 	echo -e "\e[1;31m3) Allow SSH In\e[0m"
 	echo -e "\e[1;31m4) Allow FTP In\e[0m"
+	echo -e "\e[1;31m5) Block Hackers In from attacking webserver\e[0m"
 	echo
 	echo -e "\e[1;31m99) Return to menu\e[0m"
 	echo
@@ -130,19 +122,21 @@ in_rule()
 		4)
 		sudo ufw allow "in" ftp
 		;;
+		5)
+		attack_ipban;;
 		99)
-		menu
-		;;
+		menu;;
 		*)
-		error
-		;;
+		error;;
 	esac
 }
 
 out_rule()
 {
-
-echo
+banner
+echo -e "\e[1;33mEnter Your Out Rule and start with ufw then rest of your rule\e[0m"
+read Input
+sudo $Input
 }
 
 malware_ipban()
@@ -153,9 +147,23 @@ echo -e "\e[1;33mEnter Your Local Lan IP Range\e[0m"
 echo -e "\e[1;33mFor example if its 192.168.0.0/24 then enter the example\e[0m"
 echo -e "\e[1;33mPlease do not forget to add the /24 this is Important\e[0m"
 read lanip
-cat malwareipban.txt | while read ipban
+cat ipban/malwareipban.txt | while read ipban
 do
 sudo ufw deny out log from $lanip to $ipban
+done
+}
+
+attack_ipban()
+{
+banner
+echo
+echo -e "\e[1;33mEnter Your Local Lan IP Range\e[0m"
+echo -e "\e[1;33mFor example if its 192.168.0.0/24 then enter the example\e[0m"
+echo -e "\e[1;33mPlease do not forget to add the /24 this is Important\e[0m"
+read lanip
+cat ipban/hackeripbanlist.txt | while read ipban
+do
+sudo ufw deny "in" log from $ipban to $lanip
 done
 }
 
