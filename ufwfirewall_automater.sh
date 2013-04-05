@@ -89,9 +89,9 @@ delete_rules()
 {
 	banner
 	sudo ufw status numbered
-	echo -ne "\e[1;33m[*]Enter the rule number to delete\e[0m "
+	echo -ne "\e[1;33m[*]Enter the rule number to delete:\e[0m "
 	read Input
-	sudo ufw delete RULE $Input
+	sudo ufw delete $Input
 }
 
 in_rule()
