@@ -134,9 +134,36 @@ in_rule()
 out_rule()
 {
 banner
-echo -e "\e[1;33mEnter Your Out Rule and start with ufw then rest of your rule\e[0m"
+echo -e "\e[1;31m1) Allow HTTP Out\e[0m"
+echo -e "\e[1;31m2) Allow HTTPS Out\e[0m"
+echo -e "\e[1;31m3) Allow SSH Out\e[0m"
+echo -e "\e[1;31m4) Allow FTP Out\e[0m"
+echo
+echo -e "\e[1;31m99) Return to menu\e[0m"
+echo
+echo
+echo -ne "\e[1;33m[*]Select a number from menu, then [enter]:\e[0m "
 read Input
-sudo $Input
+
+case $Input in
+		1)
+		sudo ufw allow out http
+		;;
+		2)
+		sudo ufw allow out https
+		;;
+		3)
+		sudo ufw allow out ssh
+		;;
+		4)
+		sudo ufw allow out ftp
+		;;
+		99)
+		menu;;
+		*)
+		error;;
+
+	esac
 }
 
 malware_ipban()
@@ -167,14 +194,21 @@ sudo ufw deny "in" log from $ipban to $lanip
 done
 }
 
+custom_rule(){
+banner
+
+}
+
 error()
 {
 	echo
-	echo -e "\e[1;31mError, Please Select a number from the menu\e[0m"
+	echo -e "\e[1;31mError\e[0m"
+	echo -e "\e[1;31mNot valid Input Please Select a number from the menu then follow on screen instructions\e[0m"
 	sleep 3
 }
 	##
-	#Program start
+	# Program start
+	# Loops forever
 	##
 
 while : 
