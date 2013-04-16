@@ -1,7 +1,7 @@
 #!/bin/bash
-#If you use any of my code
-#Please give credit thank
-#you
+# If you use any of my code
+# Please give credit thank
+# you
 #
 banner()
 {
@@ -64,18 +64,18 @@ add_rule()
 
 	read Input
 
-	case $Input in
-			1)
-			in_rule;;
-			2)
-			out_rule;;
-			3)
-			malware_ipban;;
-			99)
-			menu;;
-			*)
-			error;;
-	esac
+case $Input in
+		1)
+		in_rule;;
+		2)
+		out_rule;;
+		3)
+		malware_ipban;;
+		99)
+		menu;;
+		*)
+		error;;
+esac
 
 }
 
@@ -109,7 +109,7 @@ in_rule()
 	echo -ne "\e[1;33m[*]Select a number from menu, then [enter]:\e[0m "
 	read Input
 
-	case $Input in
+case $Input in
 		1)
 		sudo ufw allow "in" http
 		;;
@@ -128,22 +128,22 @@ in_rule()
 		menu;;
 		*)
 		error;;
-	esac
+esac
 }
 
 out_rule()
 {
-banner
-echo -e "\e[1;31m1) Allow HTTP Out\e[0m"
-echo -e "\e[1;31m2) Allow HTTPS Out\e[0m"
-echo -e "\e[1;31m3) Allow SSH Out\e[0m"
-echo -e "\e[1;31m4) Allow FTP Out\e[0m"
-echo
-echo -e "\e[1;31m99) Return to menu\e[0m"
-echo
-echo
-echo -ne "\e[1;33m[*]Select a number from menu, then [enter]:\e[0m "
-read Input
+	banner
+	echo -e "\e[1;31m1) Allow HTTP Out\e[0m"
+	echo -e "\e[1;31m2) Allow HTTPS Out\e[0m"
+	echo -e "\e[1;31m3) Allow SSH Out\e[0m"
+	echo -e "\e[1;31m4) Allow FTP Out\e[0m"
+	echo
+	echo -e "\e[1;31m99) Return to menu\e[0m"
+	echo
+	echo
+	echo -ne "\e[1;33m[*]Select a number from menu, then [enter]:\e[0m "
+	read Input
 
 case $Input in
 		1)
@@ -162,8 +162,7 @@ case $Input in
 		menu;;
 		*)
 		error;;
-
-	esac
+esac
 }
 
 malware_ipban()
@@ -195,7 +194,8 @@ done
 }
 
 custom_rule(){
-banner
+	banner
+	echo
 
 }
 
