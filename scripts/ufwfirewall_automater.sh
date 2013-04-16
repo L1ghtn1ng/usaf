@@ -183,7 +183,7 @@ attack_ipban()
 {
 banner
 echo
-echo -e "\e[1;33mEnter Your Local Lan IP Range\e[0m"
+echo -e "\e[1;33mEnter your local Lan IP range\e[0m"
 echo -e "\e[1;33mFor example if its 192.168.0.0/24 then enter the example\e[0m"
 echo -e "\e[1;33mPlease do not forget to add the /24 this is Important\e[0m"
 read lanip
@@ -196,6 +196,8 @@ done
 custom_rule(){
 	banner
 	echo
+	echo -e "\e[1;33mEnter your custom rule\e[0m"
+
 
 }
 
