@@ -182,22 +182,32 @@ done
 attack_ipban()
 {
 banner
+get_banlist
 echo
 echo -e "\e[1;33mEnter your local Lan IP range\e[0m"
 echo -e "\e[1;33mFor example if its 192.168.0.0/24 then enter the example\e[0m"
 echo -e "\e[1;33mPlease do not forget to add the /24 this is Important\e[0m"
 read lanip
+
 cat ipban/hackeripbanlist.txt | while read ipban
 do
 sudo ufw deny "in" log from $ipban to $lanip
 done
+rm ipban/hackeripbanlist.txt
+}
+
+get_banlist(){
+cd ipban
+wget -q https://www.trustedsec.com/banlist.txt
+sed -e "/#/d" banlist.txt > hackeripbanlist.txt
+rm banlist.txt
+cd ..
 }
 
 custom_rule(){
-	banner
-	echo
-	echo -e "\e[1;33mEnter your custom rule\e[0m"
-
+banner
+echo
+echo -e "\e[1;33mEnter your custom rule\e[0m"
 
 }
 
