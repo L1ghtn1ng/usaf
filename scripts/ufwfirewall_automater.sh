@@ -158,6 +158,7 @@ esac
 
 malware_ipban(){
 banner
+get_malware_ips
 echo
 echo -e "\e[1;33m[*]Enter Your Local Lan IP Range\e[0m"
 echo -e "\e[1;33m[*]For example if its 192.168.0.0/24 then enter the example\e[0m"
@@ -167,6 +168,17 @@ cat ipban/malwareipban.txt | while read ipban
 do
 sudo ufw deny out log from $lanip to $ipban
 done
+rm ipban/malwareipban.txt
+}
+
+get_malware_ips(){
+cd ipban
+wget -q http://malc0de.com/bl/IP_Blacklist.txt
+sed -e '/^$/d' IP_Blacklist.txt > Blacklist2.txt
+sed -e '/^\//d' Blacklist2.txt > malwareipban.txt
+rm IP_Blacklist.txt
+rm Blacklist2.txt
+cd ..
 }
 
 attack_ipban(){
