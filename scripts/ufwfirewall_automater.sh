@@ -94,8 +94,10 @@ echo -e "\e[1;31m1) Allow HTTP In\e[0m"
 echo -e "\e[1;31m2) Allow HTTPS In\e[0m"
 echo -e "\e[1;31m3) Allow SSH In\e[0m"
 echo -e "\e[1;31m4) Allow FTP In\e[0m"
-echo -e "\e[1;31m5) Block Hackers In from attacking webserver\e[0m"
-echo -e "\e[1;31m6) Custom In Rule\e[0m"
+echo -e "\e[1;31m5) Allow POP3 In\e[0m"
+echo -e "\e[1;31m6) Allow IMAP In\e[0m"
+echo -e "\e[1;31m7) Block Hackers In from attacking webserver\e[0m"
+echo -e "\e[1;31m8) Custom In Rule\e[0m"
 echo
 echo -e "\e[1;31m99) Return to menu\e[0m"
 echo
@@ -116,8 +118,14 @@ case $Input in
 		4)
 		sudo ufw allow "in" ftp
 		;;
-		5) attack_ipban;;
-		6) custom_rule;;
+		5)
+		sudo ufw allow "in" pop3
+		;;
+		6)
+		sudo ufw allow "in" imap
+		;;
+		7) attack_ipban;;
+		8) custom_rule;;
 		99) menu;;
 		*) error;;
 esac
