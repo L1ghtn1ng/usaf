@@ -90,14 +90,16 @@ sudo ufw delete $Input
 
 in_rule(){
 banner
-echo -e "\e[1;31m1) Allow HTTP In\e[0m"
-echo -e "\e[1;31m2) Allow HTTPS In\e[0m"
+echo -e "\e[1;31m1) Allow Http In\e[0m"
+echo -e "\e[1;31m2) Allow Https In\e[0m"
 echo -e "\e[1;31m3) Allow SSH In\e[0m"
-echo -e "\e[1;31m4) Allow FTP In\e[0m"
-echo -e "\e[1;31m5) Allow POP3 In\e[0m"
-echo -e "\e[1;31m6) Allow IMAP In\e[0m"
-echo -e "\e[1;31m7) Block Hackers In from attacking webserver\e[0m"
-echo -e "\e[1;31m8) Custom In Rule\e[0m"
+echo -e "\e[1;31m4) Allow Ftp In\e[0m"
+echo -e "\e[1;31m5) Allow Pop3 In\e[0m"
+echo -e "\e[1;31m6) Allow Imap In\e[0m"
+echo -e "\e[1;31m7) Allow Samba In\e[0m"
+echo -e "\e[1;31m8) Allow Smtp In\e[0m"
+echo -e "\e[1;31m9) Block Hackers In from attacking webserver\e[0m"
+echo -e "\e[1;31m10) Custom In Rule\e[0m"
 echo
 echo -e "\e[1;31m99) Return to menu\e[0m"
 echo
@@ -124,8 +126,14 @@ case $Input in
 		6)
 		sudo ufw allow "in" imap
 		;;
-		7) attack_ipban;;
-		8) custom_rule;;
+		7)
+		sudo ufw allow "in" samba
+		;;
+		8)
+		sudo ufw allow "in" smtp
+		;;
+		9) attack_ipban;;
+		10) custom_rule;;
 		99) menu;;
 		*) error;;
 esac
@@ -133,11 +141,15 @@ esac
 
 out_rule(){
 banner
-echo -e "\e[1;31m1) Allow HTTP Out\e[0m"
-echo -e "\e[1;31m2) Allow HTTPS Out\e[0m"
+echo -e "\e[1;31m1) Allow Http Out\e[0m"
+echo -e "\e[1;31m2) Allow Https Out\e[0m"
 echo -e "\e[1;31m3) Allow SSH Out\e[0m"
-echo -e "\e[1;31m4) Allow FTP Out\e[0m"
-echo -e "\e[1;31m5) Custom Out Rule\e[0m"
+echo -e "\e[1;31m4) Allow Ftp Out\e[0m"
+echo -e "\e[1;31m5) Allow Pop3 Out\e[0m"
+echo -e "\e[1;31m6) Allow Imap Out\e[0m"
+echo -e "\e[1;31m7) Allow Samba Out\e[0m"
+echo -e "\e[1;31m8) Allow Smtp Out\e[0m"
+echo -e "\e[1;31m9) Custom Out Rule\e[0m"
 echo
 echo -e "\e[1;31m99) Return to menu\e[0m"
 echo
@@ -158,7 +170,19 @@ case $Input in
 		4)
 		sudo ufw allow out ftp
 		;;
-		5) custom_rule;;
+		5)
+		sudo ufw allow out pop3
+		;;
+		6)
+		sudo ufw allow out imap
+		;;
+		7)
+		sudo ufw allow out samba
+		;;
+		8)
+		sudo ufw allow out smtp
+		;;
+		9) custom_rule;;
 		99) menu;;
 		*) error;;
 esac
