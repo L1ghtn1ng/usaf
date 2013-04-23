@@ -1,8 +1,7 @@
 #!/bin/bash
-#If you use any of my code please give me credit thats all i ask
-#thank you
-#
-#
+# If you use any of my code 
+# Please give me credit thats all i ask
+# Thank you
 #
 #These are the variables I have set Do Not Change these unless you know what you are doing 
 CpuName=`cat /proc/cpuinfo > cpuinfo.txt; cat cpuinfo.txt | sort | uniq -c | grep 'name' | cut -d ':' -f2; rm cpuinfo.txt`
@@ -30,11 +29,9 @@ Eth0mac=`ifconfig | grep 'eth0' | awk '{print$5}'`
 Wlan0mac=`ifconfig | grep 'wlan0' | awk '{print$5}'`
 Apmac=`iwconfig > apmac.txt 2>/dev/null; cat apmac.txt | grep Access" "Point | awk '{print$6}'; rm apmac.txt`
 Essid=`iwconfig > essid.txt 2>/dev/null; cat essid.txt | grep 'ESSID' | awk '{print$4}' | cut -d ':' -f2 | cut -d '"' -f2; rm essid.txt`
-#
-#
-#
-banner()
-{
+# End of variables
+
+banner(){
 clear
 echo -e "\e[1;32m
  #####                                      ###                      
@@ -55,8 +52,7 @@ echo
 echo -e "\e[1;32m===================================================\e[0m"
 }
 
-hardware_menu()
-{
+hardware_menu(){
 clear
 echo -e "\e[1;31mCpu Model:\e[0m" $CpuName
 echo -e "\e[1;31mCpu Cores:\e[0m" $Cpucores
@@ -88,8 +84,7 @@ case $choice in
 esac
 }
 
-network_menu()
-{
+network_menu(){
 clear
 echo -e "\e[1;31mName:\e[0m" $LoginName
 echo -e "\e[1;31mUser:\e[0m" $User
@@ -118,8 +113,7 @@ case $choice in
 esac
 }
 
-menu()
-{
+menu(){
 banner
 echo
 echo
@@ -148,14 +142,15 @@ case $choice in
 esac
 }
 
-error()
-{
+error(){
 echo
 echo -e "\e[1;31mError, that is not a valid choice or Input, Returning to menu\e[0m"
 sleep 3
 }
 
+##
 # program start
+##
 
 while :
 do
