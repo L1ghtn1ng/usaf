@@ -51,7 +51,6 @@ add_rule(){
 banner
 echo -e "\e[1;31m1) Set Incoming Rule\e[0m"
 echo -e "\e[1;31m2) Set Outcoming Rule\e[0m"
-echo -e "\e[1;31m3) Block Malware Websites\e[0m"
 echo
 echo
 echo -e "\e[1;31m99) Return to menu\e[0m"
@@ -65,8 +64,6 @@ case $Input in
 		in_rule;;
 		2)
 		out_rule;;
-		3)
-		malware_ipban;;
 		99)
 		menu;;
 		*)
@@ -150,6 +147,7 @@ echo -e "\e[1;31m6) Allow Imap Out\e[0m"
 echo -e "\e[1;31m7) Allow Samba Out\e[0m"
 echo -e "\e[1;31m8) Allow Smtp Out\e[0m"
 echo -e "\e[1;31m9) Custom Out Rule\e[0m"
+echo -e "\e[1;31m10) Block Malware Websites\e[0m"
 echo
 echo -e "\e[1;31m99) Return to menu\e[0m"
 echo
@@ -183,6 +181,7 @@ case $Input in
 		sudo ufw allow out smtp
 		;;
 		9) custom_rule;;
+		10) malware_ipban;;
 		99) menu;;
 		*) error;;
 esac
