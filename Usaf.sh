@@ -4,6 +4,15 @@
 #
 banner(){
 clear
+echo -e "\e[1;32m
+##     ##     ######        ###       ######## 
+##     ##    ##    ##      ## ##      ##       
+##     ##    ##           ##   ##     ##       
+##     ##     ######     ##     ##    ######   
+##     ##          ##    #########    ##       
+##     ##    ##    ##    ##     ##    ##       
+ #######      ######     ##     ##    ##\e[0m"
+
 echo
 echo -e "\e[1;35mWelcome to the Ubuntu System Administration Framework (U.S.A.F)\e[0m"
 echo
