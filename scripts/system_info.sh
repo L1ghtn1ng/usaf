@@ -1,6 +1,7 @@
 #!/bin/bash
+#
 # If you use any of my code 
-# Please give me credit thats all i ask
+# Please give me credit thats all I ask
 # Thank you
 #
 #These are the variables I have set Do Not Change these unless you know what you are doing 
@@ -27,6 +28,7 @@ IP=`ifconfig | grep 'Bcast' | awk '{print$2}' | cut -d ':' -f2`
 Public_ip=`wget -q "http://ipecho.net/plain" -O publicip; cat publicip; rm publicip`
 Eth0mac=`ifconfig | grep 'eth0' | awk '{print$5}'`
 Wlan0mac=`ifconfig | grep 'wlan0' | awk '{print$5}'`
+Wlanspeed=`iwconfig wlan0 | grep -i 'Bit Rate' | cut -d '=' -f2 | cut -d 'T' -f1`
 Apmac=`iwconfig > apmac.txt 2>/dev/null; cat apmac.txt | grep Access" "Point | awk '{print$6}'; rm apmac.txt`
 Essid=`iwconfig > essid.txt 2>/dev/null; cat essid.txt | grep 'ESSID' | awk '{print$4}' | cut -d ':' -f2 | cut -d '"' -f2; rm essid.txt`
 # End of variables
@@ -84,7 +86,7 @@ case $choice in
 esac
 }
 
-network_menu(){
+system_menu(){
 clear
 echo -e "\e[1;31mName:\e[0m" $LoginName
 echo -e "\e[1;31mUser:\e[0m" $User
@@ -93,7 +95,8 @@ echo -e "\e[1;31mExternal IP:\e[0m" $Public_ip
 echo -e "\e[1;31mRouter Essid:\e[0m" $Essid
 echo -e "\e[1;31mRouter Mac:\e[0m" $Apmac
 echo -e "\e[1;31mEth0 Mac:\e[0m" $Eth0mac 
-echo -e "\e[1;31mWlan0 Mac:\e[0m" $Wlan0mac 
+echo -e "\e[1;31mWlan0 Mac:\e[0m" $Wlan0mac
+echo -e "\e[1;31mWireless Speed:\e[0m" $Wlanspeed 
 echo -e "\e[1;31mComputer Name:\e[0m" $Computername
 echo -e "\e[1;31mOS Release:\e[0m" $Os
 echo -e "\e[1;31mOS Codename:\e[0m" $codename
@@ -118,7 +121,7 @@ banner
 echo
 echo
 echo -e "\e[1;31m1) Hardware menu\e[0m"
-echo -e "\e[1;31m2) Network menu\e[0m"
+echo -e "\e[1;31m2) System menu\e[0m"
 echo
 echo -e "\e[1;31m0) Exit\e[0m"
 echo
@@ -131,7 +134,7 @@ case $choice in
 	hardware_menu
 	;;
 	2)
-	network_menu
+	system_menu
 	;;
 	0)
 	break
