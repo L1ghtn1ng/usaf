@@ -72,7 +72,7 @@ echo -e "\e[1;31mKernel Version:\e[0m" $Kernelversion
 echo -e "\e[1;31mBattery:\e[0m" $Battery
 echo
 echo
-echo -ne "\e[1;33m[*]Enter 99 to return to menu\e[0m "
+echo -ne "\e[1;33m[*]Enter 99 to return to menu\e[0m: "
 
 read choice
 
@@ -102,7 +102,7 @@ echo -e "\e[1;31mOS Release:\e[0m" $Os
 echo -e "\e[1;31mOS Codename:\e[0m" $codename
 echo
 echo
-echo -ne "\e[1;33m[*]Enter 99 to return to menu\e[0m "
+echo -ne "\e[1;33m[*]Enter 99 to return to menu\e[0m: "
 
 read choice
 
