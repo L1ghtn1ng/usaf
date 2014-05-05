@@ -26,7 +26,9 @@ User=`whoami`
 LoginName=`logname`
 IP=`ifconfig | grep 'Bcast' | awk '{print$2}' | cut -d ':' -f2`
 Public_ip=`wget -q "http://ipecho.net/plain" -O publicip; cat publicip; rm publicip`
+Ethernet_controller=`lspci -Q | grep 'Ethernet controller' | cut -d ':' -f3 | cut -d '(' -f1`
 Eth0mac=`ifconfig | grep 'eth0' | awk '{print$5}'`
+Network_controller=`lspci -Q | grep 'Network controller' | cut -d ':' -f3 | cut -d '(' -f1`
 Wlan0mac=`ifconfig | grep 'wlan0' | awk '{print$5}'`
 Wlanspeed=`iwconfig wlan0 | grep -i 'Bit Rate' | cut -d '=' -f2 | cut -d 'T' -f1`
 Apmac=`iwconfig > apmac.txt 2>/dev/null; cat apmac.txt | grep Access" "Point | awk '{print$6}'; rm apmac.txt`
@@ -68,6 +70,8 @@ echo -e "\e[1;31mRam Free:\e[0m" $RamFree
 echo -e "\e[1;31mRam Type:\e[0m" $RamType
 echo -e "\e[1;31mRam Speed:\e[0m" $RamSpeed
 echo -e "\e[1;31mMax Ram Supported:\e[0m" $RamSupported
+echo -e "\e[1;31mEthernet Controller:\e[0m" $Ethernet_controller
+echo -e "\e[1;31mNetwork Controller:\e[0m" $Network_controller
 echo -e "\e[1;31mKernel Version:\e[0m" $Kernelversion
 echo -e "\e[1;31mBattery:\e[0m" $Battery
 echo
