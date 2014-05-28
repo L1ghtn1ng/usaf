@@ -49,18 +49,26 @@ def hardware_menu():
 def system_menu():
     os.system("clear")
     banner()
-    print("Name: {0}".format(name)
-    print("User: {0}".format(user)
+    print("Name: {0}".format(name))
+    print("User: {0}".format(user))
     print("Local IP: {0}")
-    print("External IP: {0}".format(external)
+    print("External IP: {0}".format("external"))
     print("Router Essid:")
     print("Router Mac:")
     print("Eth0 Mac:")
     print("Wlan0 Mac:")
     print("Wireless Speed:")
-    print("Computer Name: {0}".format(hostname)
+    print("Computer Name: {0}".format(hostname))
     print("OS Release:")
     print("OS Codename:")
+
+    menu_choice = int(input("\nEnter 99 to return to menu: ")
+
+    if menu_choice == "99":
+       menu()
+
+    else:
+        error()
 
 # main menu of program
 def menu():
@@ -70,7 +78,7 @@ def menu():
 1.) Hardware Infomation
 2.) Network Infomation
 3.) Quit""") + end_colour)
-    menu_choice = int(input('\n[*]Enter Option: '))
+    menu_choice = int(input("\n[*]Enter Option: "))
 
     if  menu_choice == 1:
          hardware_menu()
