@@ -44,7 +44,32 @@ def main():
 
 
 def hardware_menu():
-    print(red + ("\nComing soon") + end_colour)
+    print("Cpu Model:")
+    print("Cpu Cores: {cores}".format(cores=os.cpu_count()))
+    print("Cpu Threads:")
+    print("Cpu Temperature:") 
+    print("Current Cpu Speed:")
+    print("Max Cpu Speed:")
+    print("Cpu Characteristics:")
+    print("Ram Total:")
+    print("Ram Free:")
+    print("Ram Type:")
+    print("Ram Speed:")
+    print("Max Ram Supported:")
+    print("Ethernet Controller:")
+    print("Network Controller:")
+    print("Kernel Version:")
+    print("Battery:")
+
+    menu_choice = int(input("\nEnter 99 to return to menu: ")
+    # fix this if statment syntax error
+    if menu_choice == "99":
+        menu()
+
+    else:
+        error()
+
+
 
 def system_menu():
     os.system("clear")
@@ -63,7 +88,7 @@ def system_menu():
     print("OS Codename:")
 
     menu_choice = int(input("\nEnter 99 to return to menu: ")
-
+    # fix this if statment syntax error
     if menu_choice == "99":
        menu()
 
