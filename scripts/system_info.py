@@ -3,11 +3,14 @@
 import os
 import platform
 import sys
-import time
 import pwd
 import urllib 
 import urllib.parse
 import urllib.request
+import fcntl
+import struct
+import subprocess
+from time import sleep
 
 # Variables
 
@@ -61,15 +64,32 @@ def hardware_menu():
     print("Kernel Version:")
     print("Battery:")
 
-    menu_choice = int(input("\nEnter 99 to return to menu: ")
-    # fix this if statment syntax error
+    menu_choice = int(input("\nEnter 99 to return to menu: "))
+
     if menu_choice == "99":
         menu()
 
     else:
         error()
 
+def cpu_temp():
+    return subprocess.Popen("acpi -t").read()
 
+    print(cpu_temp().split('\n', '')
+
+def wlan_mac(ifname):
+    s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+    info = fcntl.ioctl(s.fileno(), 0x8927,  struct.pack('256s', ifname[:15]))
+    return ''.join(['%02x:' % ord(char) for char in info[18:24]])[:-1]
+
+    print wlan_mac('wlan0')
+
+def lan_mac(ifname):
+    s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+    info = fcntl.ioctl(s.fileno(), 0x8927,  struct.pack('256s', ifname[:15]))
+    return ''.join(['%02x:' % ord(char) for char in info[18:24]])[:-1]
+
+    print lan_mac('eth0')
 
 def system_menu():
     os.system("clear")
@@ -77,18 +97,18 @@ def system_menu():
     print("Name: {0}".format(name))
     print("User: {0}".format(user))
     print("Local IP: {0}")
-    print("External IP: {0}".format("external"))
+    print("External IP: {0}".format(str("external")))
     print("Router Essid:")
     print("Router Mac:")
-    print("Eth0 Mac:")
-    print("Wlan0 Mac:")
+    print("Eth0 Mac: {0}".format(lan_mac('eth0')))
+    print("Wlan0 Mac: {0}".format(wlan_mac('wlan0')))
     print("Wireless Speed:")
     print("Computer Name: {0}".format(hostname))
     print("OS Release:")
     print("OS Codename:")
 
-    menu_choice = int(input("\nEnter 99 to return to menu: ")
-    # fix this if statment syntax error
+    menu_choice = int(input("\nEnter 99 to return to menu: "))
+
     if menu_choice == "99":
        menu()
 
@@ -116,7 +136,7 @@ def menu():
 
 def error():
     print(red + ("\n[!] Invalid Option, Please try again"))
-    time.sleep(4)
+    sleep(4)
 
 # run program
 if __name__ == '__main__':
