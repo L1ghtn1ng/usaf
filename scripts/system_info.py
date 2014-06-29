@@ -4,7 +4,7 @@ import os
 import platform
 import sys
 import pwd
-import urllib 
+import urllib
 import urllib.parse
 import urllib.request
 import fcntl
@@ -30,12 +30,12 @@ hostname = platform.node()
 def banner():
 	os.system("clear")
 	print((green + ("""
- #####                                      ###                      
-#     # #   #  ####  ##### ###### #    #     #  #    # ######  ####  
-#        # #  #        #   #      ##  ##     #  ##   # #      #    # 
- #####    #    ####    #   #####  # ## #     #  # #  # #####  #    # 
-      #   #        #   #   #      #    #     #  #  # # #      #    # 
-#     #   #   #    #   #   #      #    #     #  #   ## #      #    # 
+ #####                                      ###
+#     # #   #  ####  ##### ###### #    #     #  #    # ######  ####
+#        # #  #        #   #      ##  ##     #  ##   # #      #    #
+ #####    #    ####    #   #####  # ## #     #  # #  # #####  #    #
+      #   #        #   #   #      #    #     #  #  # # #      #    #
+#     #   #   #    #   #   #      #    #     #  #   ## #      #    #
  #####    #    ####    #   ###### #    #    ### #    # #       #### """) + end_colour))
 
 def creator():
@@ -50,7 +50,7 @@ def hardware_menu():
     print("Cpu Model:")
     print("Cpu Cores: {cores}".format(cores=os.cpu_count()))
     print("Cpu Threads:")
-    print("Cpu Temperature:") 
+    print("Cpu Temperature:")
     print("Current Cpu Speed:")
     print("Max Cpu Speed:")
     print("Cpu Characteristics:")
@@ -74,21 +74,18 @@ def hardware_menu():
 
 def cpu_temp():
     return subprocess.Popen("acpi -t").read()
-
     print(cpu_temp().split('\n', '')
 
 def wlan_mac(ifname):
     s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
     info = fcntl.ioctl(s.fileno(), 0x8927,  struct.pack('256s', ifname[:15]))
     return ''.join(['%02x:' % ord(char) for char in info[18:24]])[:-1]
-
     print wlan_mac('wlan0')
 
 def lan_mac(ifname):
     s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
     info = fcntl.ioctl(s.fileno(), 0x8927,  struct.pack('256s', ifname[:15]))
     return ''.join(['%02x:' % ord(char) for char in info[18:24]])[:-1]
-
     print lan_mac('eth0')
 
 def system_menu():
@@ -126,11 +123,11 @@ def menu():
     menu_choice = int(input("\n[*]Enter Option: "))
 
     if  menu_choice == 1:
-         hardware_menu()
+        hardware_menu()
     elif  menu_choice == 2:
-           system_menu()
+		system_menu()
     elif  menu_choice == 3:
-           sys.exit(0)
+		sys.exit(0)
     else:
        error()
 
@@ -140,6 +137,4 @@ def error():
 
 # run program
 if __name__ == '__main__':
-     main()
-
- 
+	main()
