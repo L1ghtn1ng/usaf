@@ -40,6 +40,9 @@ def creator():
     print(yellow + ("\nCreated by Jay Townsend (L1ghtn1ng)") + end_colour)
 
 def hardware_menu():
+
+   try:
+
     print("Cpu Model: {0}".format(get_processor_name()))
     print("Cpu Cores: {0}".format(os.cpu_count()))
     print("Cpu Threads:")
@@ -65,6 +68,8 @@ def hardware_menu():
     else:
         error()
 
+   except ValueError:
+         print(error())
 
 def get_processor_name():
 
