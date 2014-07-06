@@ -12,7 +12,7 @@ import struct
 import subprocess
 from time import sleep
 
-# Variables
+# Global Variables
 
 yellow = '\033[93m'
 end_colour = '\033[0m'
@@ -21,8 +21,6 @@ red = '\033[91m'
 green = '\033[92m'
 blue = '\033[94m'
 public_ip = urllib.request.urlopen('http://ipecho.net/plain')
-name = pwd.getpwuid(os.getuid())[0]
-user = pwd.getpwuid(os.getuid())[0]
 external = public_ip.read()
 hostname = platform.node()
 # banner for program
@@ -41,14 +39,9 @@ def banner():
 def creator():
     print(yellow + ("\nCreated by Jay Townsend (L1ghtn1ng)") + end_colour)
 
-def main():
-     while 1:
-          menu()
-
-
 def hardware_menu():
-    print("Cpu Model:")
-    print("Cpu Cores: {cores}".format(cores=os.cpu_count()))
+    print("Cpu Model: {0}".format(get_processor_name()))
+    print("Cpu Cores: {0}".format(os.cpu_count()))
     print("Cpu Threads:")
     print("Cpu Temperature:")
     print("Current Cpu Speed:")
@@ -67,53 +60,67 @@ def hardware_menu():
     menu_choice = int(input("\nEnter 99 to return to menu: "))
 
     if menu_choice == "99":
-        menu()
+        main_menu()
 
     else:
         error()
+
+
+def get_processor_name():
+
+    if platform.system() == "Linux":
+        command = "cat /proc/cpuinfo | sort | uniq -c"
+        all_info = subprocess.getoutput(command).strip()
+        for line in all_info.split("\n"):
+            if "model name" in line:
+                cpuname = (str(line.split(':')[1].strip()))
+                print(cpuname)
 
 def cpu_temp():
-    return subprocess.Popen("acpi -t").read()
-    print(cpu_temp().split('\n', ''))
+    pass
 
-def wlan_mac(ifname):
-    s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
-    info = fcntl.ioctl(s.fileno(), 0x8927,  struct.pack('256s', ifname[:15]))
-    return ''.join(['%02x:' % ord(char) for char in info[18:24]])[:-1]
-    print(wlan_mac('wlan0'))
+def wlan_mac():
+    pass
 
-def lan_mac(ifname):
-    s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
-    info = fcntl.ioctl(s.fileno(), 0x8927,  struct.pack('256s', ifname[:15]))
-    return ''.join(['%02x:' % ord(char) for char in info[18:24]])[:-1]
-    print(lan_mac('eth0'))
+def lan_mac():
+    pass
 
 def system_menu():
-    os.system("clear")
-    banner()
-    print("Name: {0}".format(name))
-    print("User: {0}".format(user))
-    print("Local IP: {0}")
-    print("External IP: {0}".format(str("external")))
-    print("Router Essid:")
-    print("Router Mac:")
-    print("Eth0 Mac: {0}".format(lan_mac('eth0')))
-    print("Wlan0 Mac: {0}".format(wlan_mac('wlan0')))
-    print("Wireless Speed:")
-    print("Computer Name: {0}".format(hostname))
-    print("OS Release:")
-    print("OS Codename:")
 
-    menu_choice = int(input("\nEnter 99 to return to menu: "))
+    name = pwd.getpwuid(os.getuid())[0]
+    user = pwd.getpwuid(os.getuid())[0]
 
-    if menu_choice == "99":
-       menu()
+    try:
+     os.system("clear")
+     banner()
+     print("Name: {0}".format(name))
+     print("User: {0}".format(user))
+     print("Local IP: {0}")
+     print("External IP: {0}".format(str(external))
+     print("Router Essid: {0}")
+     print("Router Mac: {0}")
+     print("Eth0 Mac: {0}".format(lan_mac()))
+     print("Wlan0 Mac: {0}".format(wlan_mac()))
+     print("Wireless Speed: {0}")
+     print("Computer Name: {0}".format(hostname))
+     print("OS Release: {0}")
+     print("OS Codename: {0}")
 
-    else:
-        error()
+     menu_choice = int(input("\nEnter 99 to return to menu: "))
+
+     if menu_choice == "99":
+        main_menu()
+
+     else:
+         error()
+
+    except ValueError:
+          print(error())
 
 # main menu of program
-def menu():
+def main_menu():
+
+   try:
     banner()
     creator()
     print(red + ("""
@@ -131,10 +138,18 @@ def menu():
     else:
         error()
 
+   except ValueError:
+            print(error())
+
 def error():
     print(red + ("\n[!] Invalid Option, Please try again") + end_colour)
-    sleep(4)
+    sleep(2.0)
 
 # run program
+
+def main():
+     while 1:
+          main_menu()
+
 if __name__ == '__main__':
 	main()
