@@ -7,12 +7,10 @@ import pwd
 import urllib
 import urllib.parse
 import urllib.request
-import fcntl
-import struct
 import subprocess
 from time import sleep
 
-# Global Variables
+# Colour Variables
 
 yellow = '\033[93m'
 end_colour = '\033[0m'
@@ -20,9 +18,7 @@ purple = '\033[95m'
 red = '\033[91m'
 green = '\033[92m'
 blue = '\033[94m'
-public_ip = urllib.request.urlopen('http://ipecho.net/plain')
-external = public_ip.read()
-hostname = platform.node()
+
 # banner for program
 
 def banner():
@@ -94,6 +90,9 @@ def system_menu():
 
     name = pwd.getpwuid(os.getuid())[0]
     user = pwd.getpwuid(os.getuid())[0]
+    hostname = platform.node()
+    public_ip = urllib.request.urlopen('http://ipecho.net/plain')
+    external = public_ip.read()
 
     try:
      os.system("clear")
@@ -101,7 +100,7 @@ def system_menu():
      print("Name: {0}".format(name))
      print("User: {0}".format(user))
      print("Local IP: {0}")
-     print("External IP: {0}".format(str(external))
+     print("External IP: {0}".format(str(external)))
      print("Router Essid: {0}")
      print("Router Mac: {0}")
      print("Eth0 Mac: {0}".format(lan_mac()))
