@@ -39,24 +39,26 @@ def hardware_menu():
 
    try:
 
+    os.system('clear')
+    banner()
     print("Cpu Model: {0}".format(get_processor_name()))
     print("Cpu Cores: {0}".format(os.cpu_count()))
-    print("Cpu Threads:")
-    print("Cpu Temperature:")
-    print("Current Cpu Speed:")
-    print("Max Cpu Speed:")
-    print("Cpu Characteristics:")
-    print("Ram Total:")
-    print("Ram Free:")
-    print("Ram Type:")
-    print("Ram Speed:")
-    print("Max Ram Supported:")
-    print("Ethernet Controller:")
-    print("Network Controller:")
-    print("Kernel Version:")
-    print("Battery:")
+    print("Cpu Threads: {0}")
+    print("Cpu Temperature: {0}")
+    print("Current Cpu Speed: {0}")
+    print("Max Cpu Speed: {0}")
+    print("Cpu Characteristics: {0}")
+    print("Ram Total: {0}")
+    print("Ram Free: {0}")
+    print("Ram Type: {0}")
+    print("Ram Speed: {0}")
+    print("Max Ram Supported: {0}")
+    print("Ethernet Controller: {0}")
+    print("Network Controller: {0}")
+    print("Kernel Version: {0}")
+    print("Battery: {0}")
 
-    menu_choice = int(input("\nEnter 99 to return to menu: "))
+    menu_choice = int(input("\n[*]Enter 99 to return to menu: "))
 
     if menu_choice == "99":
         main_menu()
@@ -64,7 +66,7 @@ def hardware_menu():
     else:
         error()
 
-   except ValueError:
+   except (ValueError):
          print(error())
 
 def get_processor_name():
@@ -75,7 +77,7 @@ def get_processor_name():
         for line in all_info.split("\n"):
             if "model name" in line:
                 cpuname = (str(line.split(':')[1].strip()))
-                print(cpuname)
+                return cpuname
 
 def cpu_temp():
     pass
@@ -110,7 +112,7 @@ def system_menu():
      print("OS Release: {0}")
      print("OS Codename: {0}")
 
-     menu_choice = int(input("\nEnter 99 to return to menu: "))
+     menu_choice = int(input("\n[*]Enter 99 to return to menu: "))
 
      if menu_choice == "99":
         main_menu()
@@ -118,7 +120,7 @@ def system_menu():
      else:
          error()
 
-    except ValueError:
+    except (ValueError):
           print(error())
 
 # main menu of program
@@ -142,7 +144,7 @@ def main_menu():
     else:
         error()
 
-   except ValueError:
+   except (ValueError):
             print(error())
 
 def error():
