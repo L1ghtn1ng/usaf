@@ -5,22 +5,22 @@
 # Thank you
 #
 #These are the variables I have set Do Not Change these unless you know what you are doing 
-CpuName=`cat /proc/cpuinfo > cpuinfo.txt; cat cpuinfo.txt | sort | uniq -c | grep 'name' | cut -d ':' -f2; rm cpuinfo.txt`
-Cpucores=`cat /proc/cpuinfo > cpuinfo.txt; cat cpuinfo.txt | sort | uniq -c | grep 'cores' | cut -d ':' -f2; rm cpuinfo.txt`
-RamTotal=`cat /proc/meminfo > meminfo.txt; cat meminfo.txt | grep 'MemTotal' | cut -d ':' -f2; rm meminfo.txt`
-RamFree=`cat /proc/meminfo > meminfo.txt; cat meminfo.txt | grep 'MemFree' | cut -d ':' -f2; rm meminfo.txt`
+CpuName=`cat /proc/cpuinfo | sort | uniq -c | grep 'name' | cut -d ':' -f2`
+Cpucores=`cat /proc/cpuinfo | sort | uniq -c | grep 'cores' | cut -d ':' -f2`
+RamTotal=`cat /proc/meminfo | grep 'MemTotal' | cut -d ':' -f2`
+RamFree=`cat /proc/meminfo | grep 'MemFree' | cut -d ':' -f2`
 RamSpeed=` sudo dmidecode -t memory | sort | uniq -c | grep Speed | cut -d ':' -f2 | cut -d 'U' -f1`
 RamSupported=`sudo dmidecode -t memory | sort | uniq -c | grep 	Maximum" "Capacity | cut -d ':' -f2`
 Battery=`acpi -V | grep 'Battery' | cut -d ':' -f2`
-Cpuspeed=`sudo dmidecode > cpuspeed.txt; cat cpuspeed.txt | sort | uniq -c | grep Current" "Speed | cut -d ':' -f2; rm cpuspeed.txt`
-Cpumax=`sudo dmidecode > cpuspeed.txt; cat cpuspeed.txt | sort | uniq -c | grep Max" "Speed | cut -d ':' -f2; rm cpuspeed.txt`
-Cputhreads=`sudo dmidecode > cpuspeed.txt; cat cpuspeed.txt | sort | uniq -c | grep Thread" "Count | cut -d ':' -f2; rm cpuspeed.txt`
-CpuCharacteristics=`sudo dmidecode > cpuspeed.txt; cat cpuspeed.txt | sort | grep 64-bit | cut -d ':' -f2; rm cpuspeed.txt`
-RamType=`sudo dmidecode > cpuspeed.txt; cat cpuspeed.txt | sort | uniq | grep DDR | cut -d ':' -f2; rm cpuspeed.txt`
+Cpuspeed=`sudo dmidecode | sort | uniq -c | grep Current" "Speed | cut -d ':' -f2`
+Cpumax=`sudo dmidecode | sort | uniq -c | grep Max" "Speed | cut -d ':' -f2`
+Cputhreads=`sudo dmidecode | sort | uniq -c | grep Thread" "Count | cut -d ':' -f2`
+CpuCharacteristics=`sudo dmidecode | sort | grep 64-bit | cut -d ':' -f2`
+RamType=`sudo dmidecode | sort | uniq | grep DDR | cut -d ':' -f2`
 Kernelversion=`uname -r | cut -d 'g' -f1 | sed -e  "s/-*$//"`
 Computername=`uname -n`
-Os=`cat /etc/*release > osinfo.txt; cat osinfo.txt | grep 'DISTRIB_DESCRIPTION' | cut -d '=' -f2 | cut -d '"' -f2; rm osinfo.txt`
-codename=`cat /etc/*release > osinfo.txt; cat osinfo.txt | grep 'VERSION' | cut -d '=' -f2 | cut -d ',' -f2 | cut -d '"' -f1; rm osinfo.txt`
+Os=`cat /etc/*release | grep 'DISTRIB_DESCRIPTION' | cut -d '=' -f2 | cut -d '"' -f2`
+codename=`cat /etc/*release | grep 'VERSION' | cut -d '=' -f2 | cut -d ',' -f2 | cut -d '"' -f1`
 cputemp=`acpi -t | cut -d ',' -f2`
 User=`whoami`
 LoginName=`logname`
@@ -31,8 +31,8 @@ Eth0mac=`ifconfig | grep 'eth0' | awk '{print$5}'`
 Network_controller=`lspci -Q | grep 'Network controller' | cut -d ':' -f3 | cut -d '(' -f1`
 Wlan0mac=`ifconfig | grep 'wlan0' | awk '{print$5}'`
 Wlanspeed=`iwconfig wlan0 | grep -i 'Bit Rate' | cut -d '=' -f2 | cut -d 'T' -f1`
-Apmac=`iwconfig > apmac.txt 2>/dev/null; cat apmac.txt | grep Access" "Point | awk '{print$6}'; rm apmac.txt`
-Essid=`iwconfig > essid.txt 2>/dev/null; cat essid.txt | grep 'ESSID' | awk '{print$4}' | cut -d ':' -f2 | cut -d '"' -f2; rm essid.txt`
+Apmac=`iwconfig  2>/dev/null | grep Access" "Point | awk '{print$6}'`
+Essid=`iwconfig 2>/dev/null | grep 'ESSID' | awk '{print$4}' | cut -d ':' -f2 | cut -d '"' -f2`
 # End of variables
 
 banner(){
