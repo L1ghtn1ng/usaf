@@ -49,6 +49,10 @@ def cpu_temp():
     pass
 
 
+def cpu_threads():
+    pass
+
+
 def wlan_mac():
     command = "ifconfig | grep wlan0"
     all_info = subprocess.getoutput(command).strip()
@@ -127,8 +131,8 @@ def hardware_menu():
         banner()
         print("Cpu Model: {0}".format(get_processor_name()))
         print("Cpu Cores: {0}".format(os.cpu_count()))
-        print("Cpu Threads: {0}")
-        print("Cpu Temperature: {0}")
+        print("Cpu Threads: {0}".format(cpu_threads()))
+        print("Cpu Temperature: {0}".format(cpu_temp()))
         print("Current Cpu Speed: {0}")
         print("Max Cpu Speed: {0}")
         print("Cpu Characteristics: {0}")
@@ -224,12 +228,16 @@ def error():
 
 
 def main():
+    if os.getuid() != 0:
+        print("\nPlease run as Root")
+        sleep(2)
+        sys.exit()
     try:
         while 1:
             main_menu()
 
     except(KeyboardInterrupt):
-            print("\n Ctrl+C detected")
+            print("\n Ctrl+C detected, Quitting....")
             sleep(2.0)
 
 
