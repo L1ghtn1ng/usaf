@@ -27,12 +27,16 @@
 #OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 
+import sys
+
+
 try:
     import requests
     from bs4 import BeautifulSoup
 except ImportError as e:
         print('\nPlease make sure you have All Dependencies Installed, otherwise this script will not work correctly'),
         print(e)
+        sys.exit(1)
 
 
 def banner():
