@@ -52,7 +52,8 @@ def request():
 
 def parse():
     soup = BeautifulSoup
-    soup.find_all("h3", "p")
+    output = soup.find_all("h3", "p")
+    print(output)
 
 
 def main():
