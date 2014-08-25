@@ -5,4 +5,4 @@ To automate certain aspects in Ubuntu to make your life easier when administerin
 
 # Downloading
 
-git clone https://github.com/L1ghtn1ng/Ubuntu-Scripts.git  usaf/ in your home directory 
+git clone https://github.com/L1ghtn1ng/usaf.git  usaf/ in your home directory 
