@@ -57,7 +57,7 @@ def scrape():
     soup = BeautifulSoup(data)
     for output in soup.find_all('div', {'class':'eight-col', 'class':'notice'}):
         message = ("""From: Ubuntu Advisories <example@example.com>
-                   To: Infrastructure <example@example.com>
+                   To: Example <example@example.com>
                    MIME-Version: 1.0
                    Content-type: text/plain; charset="utf-8"
                    Subject: Ubuntu Security Advisories\n\n

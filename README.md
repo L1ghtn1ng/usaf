@@ -13,6 +13,8 @@ git clone https://github.com/L1ghtn1ng/usaf.git  usaf/ in your home directory
 You will need to install 
 
 * Beautifulsoup 4 by doing ```sudo apt-get install python3-bs4```
+* In Ubuntu security advisories script you will need to change the code with the parts with ```example@example.com``` 
+  to valid email addresses
 
 Thats all you will need as ```Ubuntu``` comes with the rest of the libaries U.S.A.F uses. The one thing you need to make sure
 is that you are running ```Python 3``` U.S.A.F will not work. If running on Ubuntu server you will need to install
