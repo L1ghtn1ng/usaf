@@ -31,37 +31,45 @@ import sys
 
 
 try:
+    import smtplib
     import requests
     from bs4 import BeautifulSoup
 except ImportError as e:
-        print('\nPlease make sure you have All Dependencies Installed, otherwise this script will not work correctly'),
+        print("""\nPlease make sure you have All Dependencies Installed
+                   Otherwise this script will not work correctly""")
         print(e)
         sys.exit(1)
 
 
 def banner():
     print("""\tUBUNTU SECURITY ADVISORIES SCRAPER
-        CREATED BY JAY TOWNSEND AKA(L1GHTN1NG)\n""")
+        CREATED BY JAY TOWNSEND\n""")
 
 
-def request():
-    uri = "http://www.ubuntu.com/usn/"
-    request = requests.get(uri)
-    parse().soup((request.content))
+def scrape():
+    smtpObj = smtplib.SMTP(host='localhost', port=25)
+    sender = 'example@example.com'
+    receiver = 'example@example.com'
 
-
-def parse():
-    soup = BeautifulSoup
-    output = soup.find_all("h3", "p")
-    print(output)
+    url = "www.ubuntu.com/usn/"
+    r = requests.get("http://" + url)
+    data = r.text
+    soup = BeautifulSoup(data)
+    for output in soup.find_all('div', {'class':'eight-col', 'class':'notice'}):
+        message = ("""From: Ubuntu Advisories <example@example.com>
+                   To: Infrastructure <example@example.com>
+                   MIME-Version: 1.0
+                   Content-type: text/plain; charset="utf-8"
+                   Subject: Ubuntu Security Advisories\n\n
+                  {} {}""".format(output.encode(), output.get_text().encode()))
+        smtpObj.sendmail(sender, receiver, message)
 
 
 def main():
-    try:
-        banner()
-        request()
-        parse()
-    except Exception:
+        try:
+            banner()
+            scrape()
+        except Exception:
             raise
 
 
