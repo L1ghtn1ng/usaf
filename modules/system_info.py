@@ -1,38 +1,39 @@
 #!/usr/bin/python3
 # -*- coding: utf-8 -*-
-#Copyright (c) 2014, Jay Townsend
-#All rights reserved.
+# Copyright (c) 2015, Jay Townsend
+# All rights reserved.
 #
-#Redistribution and use in source and binary forms, with or without
-#modification, are permitted provided that the following conditions are met:
+# Redistribution and use in source and binary forms, with or without
+# modification, are permitted provided that the following conditions are met:
 #
-#* Redistributions of source code must retain the above copyright notice, this
-#  list of conditions and the following disclaimer.
-#* Redistributions in binary form must reproduce the above copyright notice,
-#  this list of conditions and the following disclaimer in the documentation
-#  and/or other materials provided with the distribution.
-#* Neither the name of the {organization} nor the names of its
-#  contributors may be used to endorse or promote products derived from
-#  this software without specific prior written permission.
+# Redistributions of source code must retain the above copyright notice, this
+# list of conditions and the following disclaimer.
+# Redistributions in binary form must reproduce the above copyright notice,
+# this list of conditions and the following disclaimer in the documentation
+# and/or other materials provided with the distribution.
+# Neither the name of the {organization} nor the names of its
+# contributors may be used to endorse or promote products derived from
+# this software without specific prior written permission.
 #
-#THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
-#AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
-#IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
-#DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE
-#FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
-#DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR
-#SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER
-#CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY,
-#OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
-#OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+# THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
+# AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+# IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
+# DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE
+# FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
+# DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR
+# SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER
+# CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY,
+# OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
+# OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 
 import os
 import platform
 import sys
 import pwd
-from urllib.request import urlopen
+import urllib.request
 import subprocess
+import multiprocessing
 from time import sleep
 
 
@@ -72,12 +73,13 @@ def get_processor_name():
 
 
 def cpu_temp():
-    temp = os.system("acpi -t | cut -d ',' -f2").strip("\n")    
+    temp = os.system("acpi -t | cut -d ',' -f2")
     return temp
 
 
 def cpu_threads():
-    pass
+    threads = 'dmidecode | sort | uniq -c | grep Thread" "Count | cut -d ":" -f2'
+    subprocess.getoutput(threads)
 
 
 def wlan_mac():
@@ -102,18 +104,9 @@ def os_release():
     command = "cat /etc/*release"
     all_info = subprocess.getoutput(command).strip()
     for line in all_info.split("\n"):
-            if "DISTRIB_DESCRIPTION" in line:
-                os_version = (str(line.split('=')[1].strip('"')))
+            if "VERSION" in line:
+                os_version = (str(line.split('"')[1]))
                 return os_version
-
-
-def os_code_name():
-    command = "cat /etc/*release"
-    all_info = subprocess.getoutput(command).strip()
-    for line in all_info.split("\n"):
-        if "VERSION" in line:
-            os_version = (str(line.split(',')[1].strip('"')))
-            return os_version
 
 
 def wireless_speed():
@@ -189,7 +182,7 @@ def network_menu():
     name = pwd.getpwuid(os.getuid())[0]
     user = pwd.getpwuid(os.getuid())[0]
     hostname = platform.node()
-    public_ip = urlopen('http://ipecho.net/plain')
+    public_ip = urllib.request.urlopen('http://ipecho.net/plain')
     external = public_ip.read()
 
     try:
@@ -219,8 +212,8 @@ def network_menu():
     except(ValueError):
             print(error())
     except(KeyboardInterrupt):
-            print("\n Quiting....")
-            sleep(2.0)
+            print("\n Ctrl+C detected, Quitting....")
+            sleep(1.6)
             sys.exit(0)
 
 
@@ -265,7 +258,7 @@ def main():
 
     except(KeyboardInterrupt):
             print("\n Ctrl+C detected, Quitting....")
-            sleep(2.0)
+            sleep(1.6)
 
 
 if __name__ == '__main__':
