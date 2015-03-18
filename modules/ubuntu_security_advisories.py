@@ -38,21 +38,23 @@ except ImportError as e:
 
 
 def main():
-    smtpObj = smtplib.SMTP(host='localhost', port=25)
-    url = "http://ubuntu.com/usn/rss.xml"
-    data = fp.parse(url)
-    for entry in data['entries']:
-        message = MIMEMessage()
-        name = 'Ubuntu Security'
-        faddr = 'no-reply@example.com'
-        taddr = 'your email here'
-        message.add_header('From', '{0} <{1}>'.format(name, faddr))
-        message.add_header('To', taddr)
-        message.add_header('Subject', '{}'.format(entry['title']))
-        message.set_payload("""{} """.format(entry['summary']))
-        smtpObj.sendmail(faddr, taddr, str(message).encode())
+    try:
+        smtpobj = smtplib.SMTP(host='localhost', port=25, timeout=10)
+        url = "http://ubuntu.com/usn/rss.xml"
+        data = fp.parse(url)
+        for entry in data['entries']:
+            message = MIMEMessage()
+            name = 'Ubuntu Security'
+            faddr = 'no-reply@example.com'
+            taddr = 'your email here'
+            message.add_header('From', '{0} <{1}>'.format(name, faddr))
+            message.add_header('To', taddr)
+            message.add_header('Subject', '{}'.format(entry['title']))
+            message.set_payload("""{} """.format(entry['summary']))
+            smtpobj.sendmail(faddr, taddr, str(message).encode())
+    except OSError as e:
+        print(e)
 
 
 if __name__ == '__main__':
     main()
-
