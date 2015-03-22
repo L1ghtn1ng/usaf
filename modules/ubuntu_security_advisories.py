@@ -32,14 +32,17 @@ try:
     from email.message import Message as MIMEMessage
     import smtplib
     import feedparser as fp
+    import logging
 except ImportError as e:
-        print(e)
-        sys.exit(1)
+    print(e)
+    sys.exit(1)
 
 
 def main():
+    logging.basicConfig(filename='/var/log/security_advisories.log', level=logging.ERROR,
+                        format='%(asctime)s %(message)s')
     try:
-        smtpobj = smtplib.SMTP(host='localhost', port=25, timeout=10)
+        smtpobj = smtplib.SMTP(host='localhost', port=250, timeout=10)
         url = "http://ubuntu.com/usn/rss.xml"
         data = fp.parse(url)
         for entry in data['entries']:
@@ -53,7 +56,7 @@ def main():
             message.set_payload("""{} """.format(entry['summary']))
             smtpobj.sendmail(faddr, taddr, str(message).encode())
     except OSError as e:
-        print(e)
+        logging.error(e)
 
 
 if __name__ == '__main__':

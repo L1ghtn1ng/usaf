@@ -13,13 +13,16 @@ git clone https://github.com/L1ghtn1ng/usaf.git  usaf/ in your home directory
 You will need to install 
 
 * Postfix for sending emails ```sudo apt-get install postfix```
+
 * In Ubuntu security advisories script you will need to change the code with the parts with ```taddr```
-  to valid email addresses
+  to valid email addresses. Once you have done this create a crontab to run the script every 48 hours 
+  as you will get 50 emails every time the script runs. It has to be run as root also because it logs
+  to ```/var/log/security_advisories.log```
+* Python3 packages that need to be installed ```sudo apt-get install python3-requests python3-feedparser```
+Also can be installed using pip3 by installing ```python3-pip``` package
 
 Thats all you will need as ```Ubuntu``` comes with the rest of the libraries U.S.A.F uses. The one thing you need to make sure
-is that you are running ```Python 3``` U.S.A.F will not work if running on Ubuntu server. You will need to install
-Python 3 and the libraries that the scripts require. This is only needed for Ubuntu 12.04
-
+is that you are running ```Python 3``` U.S.A.F will not work if running on Ubuntu server that does not have ```Python 3 ```installed
 
 # Python Rewrite
 
