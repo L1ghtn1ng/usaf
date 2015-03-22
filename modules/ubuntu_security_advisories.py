@@ -42,7 +42,7 @@ def main():
     logging.basicConfig(filename='/var/log/security_advisories.log', level=logging.ERROR,
                         format='%(asctime)s %(message)s')
     try:
-        smtpobj = smtplib.SMTP(host='localhost', port=250, timeout=10)
+        smtpobj = smtplib.SMTP(host='localhost', port=25, timeout=10)
         url = "http://ubuntu.com/usn/rss.xml"
         data = fp.parse(url)
         for entry in data['entries']:
