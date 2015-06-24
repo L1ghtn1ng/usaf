@@ -31,8 +31,8 @@ echo -en "\e[1;33m[*]Please select a number from menu, then Enter: \e[0m"
 read input
 
 case $input in
-	1) scripts/./ufwfirewall_automater.sh;;
-	2) scripts/./system_info.sh;;
+	1) modules/./ufwfirewall_automater.sh;;
+	2) modules/./system_info.sh;;
 	0) break;;
 	*) error;;
 
