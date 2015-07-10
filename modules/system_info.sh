@@ -20,7 +20,7 @@ RamType=`sudo dmidecode | sort | uniq | grep DDR | cut -d ':' -f2`
 Kernelversion=`uname -r | cut -d 'g' -f1 | sed -e  "s/-*$//"`
 Computername=`uname -n`
 Os=`cat /etc/*release | grep 'DISTRIB_DESCRIPTION' | cut -d '=' -f2 | cut -d '"' -f2`
-codename=`cat /etc/*release | grep 'VERSION' | cut -d '=' -f2 | cut -d ',' -f2 | cut -d '"' -f1`
+codename=`cat /etc/*release | grep 'VERSION' | cut -d "=" -f2 | awk '{print$2, $3}' | cut -d "(" -f2 | cut -d ")" -f1`
 cputemp=`acpi -t | cut -d ',' -f2`
 User=`whoami`
 LoginName=`logname`
