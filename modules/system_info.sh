@@ -17,6 +17,7 @@ Cpumax=`sudo dmidecode | sort | uniq -c | grep Max" "Speed | cut -d ':' -f2`
 Cputhreads=`sudo dmidecode | sort | uniq -c | grep Thread" "Count | cut -d ':' -f2`
 CpuCharacteristics=`sudo dmidecode | sort | grep 64-bit | cut -d ':' -f2`
 RamType=`sudo dmidecode | sort | uniq | grep DDR | cut -d ':' -f2`
+GPU=`cat /var/log/Xorg.0.log | egrep '(NVIDIA GPU|INTEL GPU|AMD GPU)' | uniq -u | cut -d '(' -f3 | cut -d ':' -f2 | awk '{print$3,$4,$5,$6}'`
 Kernelversion=`uname -r | cut -d 'g' -f1 | sed -e  "s/-*$//"`
 Computername=`uname -n`
 Os=`cat /etc/*release | grep 'DISTRIB_DESCRIPTION' | cut -d '=' -f2 | cut -d '"' -f2`
@@ -72,6 +73,7 @@ echo -e "\e[1;31mRam Type:\e[0m" $RamType
 echo -e "\e[1;31mRam Speed:\e[0m" $RamSpeed
 echo -e "\e[1;31mMax Ram Supported:\e[0m" $RamSupported
 echo -e "\e[1;31mScreen Resolution:\e[0m" $ScreenSize
+echo -e "\e[1;31mGraphics Card:\e[0m" $GPU
 echo -e "\e[1;31mEthernet Controller:\e[0m" $Ethernet_controller
 echo -e "\e[1;31mNetwork Controller:\e[0m" $Network_controller
 echo -e "\e[1;31mKernel Version:\e[0m" $Kernelversion
