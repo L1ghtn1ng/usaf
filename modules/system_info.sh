@@ -22,6 +22,7 @@ Computername=`uname -n`
 Os=`cat /etc/*release | grep 'DISTRIB_DESCRIPTION' | cut -d '=' -f2 | cut -d '"' -f2`
 codename=`cat /etc/*release | grep 'VERSION' | cut -d "=" -f2 | awk '{print$2, $3}' | cut -d "(" -f2 | cut -d ")" -f1`
 cputemp=`acpi -t | cut -d ',' -f2`
+ScreenSize=`cat /var/log/Xorg.0.log | grep Virtual" "screen | sort | uniq -u | cut -d ':' -f2 | awk '{print$7,$8,$9}'`
 User=`whoami`
 LoginName=`logname`
 IP=`ifconfig | grep 'Bcast' | awk '{print$2}' | cut -d ':' -f2`
@@ -70,6 +71,7 @@ echo -e "\e[1;31mRam Free:\e[0m" $RamFree
 echo -e "\e[1;31mRam Type:\e[0m" $RamType
 echo -e "\e[1;31mRam Speed:\e[0m" $RamSpeed
 echo -e "\e[1;31mMax Ram Supported:\e[0m" $RamSupported
+echo -e "\e[1;31mScreen Resolution:\e[0m" $ScreenSize
 echo -e "\e[1;31mEthernet Controller:\e[0m" $Ethernet_controller
 echo -e "\e[1;31mNetwork Controller:\e[0m" $Network_controller
 echo -e "\e[1;31mKernel Version:\e[0m" $Kernelversion
