@@ -1,5 +1,6 @@
 #!/usr/bin/python3
 # Created by Jay Townsend
+# TODO add zone transfer feature
 
 import dns.name
 import dns.message
