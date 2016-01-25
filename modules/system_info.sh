@@ -20,7 +20,7 @@ RamType=`sudo dmidecode | sort | uniq | grep DDR | cut -d ':' -f2`
 GPU=`cat /var/log/Xorg.0.log | egrep '(NVIDIA GPU|INTEL GPU|AMD GPU)' | uniq -u | cut -d '(' -f3 | cut -d ':' -f2 | awk '{print$3,$4,$5,$6}'`
 Kernelversion=`uname -r | cut -d 'g' -f1 | sed -e  "s/-*$//"`
 Computername=`uname -n`
-Os=`cat /etc/*release | grep 'DISTRIB_DESCRIPTION' | cut -d '=' -f2 | cut -d '"' -f2`
+Os=`lsb_release -a | grep Release | cut -d ':' -f2`
 codename=`cat /etc/*release | grep 'VERSION' | cut -d "=" -f2 | awk '{print$2, $3}' | cut -d "(" -f2 | cut -d ")" -f1`
 cputemp=`acpi -t | cut -d ',' -f2`
 ScreenSize=`cat /var/log/Xorg.0.log | grep Virtual" "screen | sort | uniq -u | cut -d ':' -f2 | awk '{print$7,$8,$9}'`
@@ -29,7 +29,7 @@ LoginName=`logname`
 IP=`ifconfig | grep 'Bcast' | awk '{print$2}' | cut -d ':' -f2`
 Public_ip=`wget -q "http://ipecho.net/plain" -O publicip; cat publicip; rm publicip`
 Ethernet_controller=`lspci -Q | grep 'Ethernet controller' | cut -d ':' -f3 | cut -d '(' -f1`
-Eth0mac=`ifconfig | grep 'eth0' | awk '{print$5}'`
+Ethernetmac=`ifconfig | egrep '(eth0|eno1)' | awk '{print$5}'`
 Network_controller=`lspci -Q | grep 'Network controller' | cut -d ':' -f3 | cut -d '(' -f1`
 Wlan0mac=`ifconfig | grep 'wlan0' | awk '{print$5}'`
 Wlanspeed=`iwconfig wlan0 | grep -i 'Bit Rate' | cut -d '=' -f2 | cut -d 'T' -f1`
@@ -102,7 +102,7 @@ echo -e "\e[1;31mLocal IP:\e[0m" $IP
 echo -e "\e[1;31mExternal IP:\e[0m" $Public_ip
 echo -e "\e[1;31mRouter Essid:\e[0m" $Essid
 echo -e "\e[1;31mRouter Mac:\e[0m" $Apmac
-echo -e "\e[1;31mEth0 Mac:\e[0m" $Eth0mac 
+echo -e "\e[1;31mEthernet Mac:\e[0m" $Ethernetmac 
 echo -e "\e[1;31mWlan0 Mac:\e[0m" $Wlan0mac
 echo -e "\e[1;31mWireless Speed:\e[0m" $Wlanspeed 
 echo -e "\e[1;31mComputer Name:\e[0m" $Computername
