@@ -30,7 +30,7 @@ try:
                        dns.rdatatype.OPT, create=True, force_unique=True)
     response = dns.query.tcp(request, args.name_server)
 
-    if 'see draft-jabley-dnsop-refuse-any' in response.answer[0].to_text().lower():
+    if 'See draft-ietf-dnsop-refuse-any' in response.answer[0].to_text():
         request = dns.message.make_query(domain, args.type)
         request.flags |= dns.flags.AD
         request.find_rrset(request.additional, dns.name.root, ADDITIONAL_RDCLASS,
