@@ -2,6 +2,9 @@
 
 To automate certain aspects in Ubuntu to make your life easier when administering the system
 
+# License
+
+Please read the LICENSE file
 
 # Downloading
 

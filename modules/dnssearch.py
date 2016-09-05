@@ -29,7 +29,7 @@ try:
     request.find_rrset(request.additional, dns.name.root, ADDITIONAL_RDCLASS,
                        dns.rdatatype.OPT, create=True, force_unique=True)
     response = dns.query.tcp(request, args.name_server)
-
+    print(response)
     if 'See draft-ietf-dnsop-refuse-any' in response.answer[0].to_text():
         request = dns.message.make_query(domain, args.type)
         request.flags |= dns.flags.AD
