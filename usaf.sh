@@ -33,7 +33,7 @@ read input
 case $input in
 	1) modules/./ufwfirewall_automater.sh;;
 	2) modules/./system_info.sh;;
-	0) break;;
+    0) exit 0;;
 	*) error;;
 
 esac

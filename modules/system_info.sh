@@ -151,7 +151,7 @@ case $choice in
 	system_menu
 	;;
 	0)
-	break
+    exit 0
 	;;
 	*)
 	error
