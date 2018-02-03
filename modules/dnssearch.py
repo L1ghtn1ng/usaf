@@ -25,7 +25,7 @@ if not domain.is_absolute():
     domain = domain.concatenate(dns.name.root)
 try:
     request = dns.message.make_query(domain, dns.rdatatype.ANY)
-    request.flags |= dns.flags.AD
+#    request.flags |= dns.flags.AD
     request.find_rrset(request.additional, dns.name.root, ADDITIONAL_RDCLASS,
                        dns.rdatatype.OPT, create=True, force_unique=True)
     response = dns.query.tcp(request, args.name_server)
@@ -47,8 +47,6 @@ try:
         for additional in response.additional:
             print(additional)
 
-        for authority in response.authority:
-            print(authority)
 except dns.exception.Timeout:
     print('A timeout has occurred, make sure you can reach the target DNS Server(s)')
 

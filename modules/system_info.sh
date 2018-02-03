@@ -1,5 +1,5 @@
 #!/bin/bash
-#
+# License: BSD clause 3
 # If you use any of my code 
 # Please give me credit thats all I ask
 # Thank you
