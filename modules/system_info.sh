@@ -6,12 +6,12 @@
 #
 #These are the variables I have set Do Not Change these unless you know what you are doing
 
-export gw=$(ip route ls | grep -i 'default via' | awk '{print$3}')
+export gw=$(ip route ls | grep -i 'default via' | awk '{print$3}' | sort -u)
 
-motherboard=$(sudo dmidecode -s system-manufacturer)
+motherboard=$(sudo dmidecode -s baseboard-manufacturer)
 Biosversion=$(sudo dmidecode -s bios-version)
 motherboardmodel=$(sudo dmidecode -s baseboard-product-name)
-CpuName=$(lscpu | grep name | cut -d ':' -f2)
+CpuName=$(sudo dmidecode -s processor-version)
 Cpucores=$(lscpu | grep 'socket' | cut -d ':' -f2)
 RamTotal=$(cat /proc/meminfo | grep 'MemTotal' | cut -d ':' -f2)
 RamFree=$(cat /proc/meminfo | grep 'MemFree' | cut -d ':' -f2)
@@ -23,7 +23,7 @@ Cpumax=$(lscpu | grep max | cut -d ':' -f2 | cut -d '.' -f1)
 Cputhreads=$(sudo dmidecode | sort | uniq -c | grep Thread" "Count | cut -d ':' -f2)
 CpuCharacteristics=$(lscpu | egrep 64-bit | cut -d ',' -f2)
 RamType=$(sudo dmidecode | sort | uniq | grep DDR | cut -d ':' -f2)
-GPU=$(cat /var/log/Xorg.0.log | egrep '(NVIDIA GPU|INTEL GPU|AMD GPU)' | uniq -u | cut -d '(' -f3 | cut -d ':' -f2 | awk '{print$3,$4,$5,$6}')
+GPU=$(cat /var/log/Xorg.0.log | egrep '(NVIDIA GPU|INTEL GPU|AMD GPU)' | uniq -u | cut -d '(' -f3 | cut -d ':' -f2 | awk '{print$3,$4,$5,$6,$7}')
 Kernelversion=$(uname -r | cut -d 'g' -f1 | sed -e  "s/-*$//")
 Computername=`uname -n`
 Os=`lsb_release -r | grep Release | cut -d ':' -f2`
@@ -32,15 +32,17 @@ cputemp=`acpi -t | cut -d ',' -f2`
 ScreenSize=$(cat /var/log/Xorg.0.log | grep Virtual" "screen | sort | uniq -u | cut -d ':' -f2 | awk '{print$7,$8,$9}')
 User=$(whoami)
 LoginName=$(logname)
-IP=$(ip a | egrep '(eth0|eno1)' | egrep inet | awk '{print$2}')
+IP=$(ip a | egrep '(eth0|eno1|enp5s0|wlp4s0)' | egrep inet | awk '{print$2}')
 Public_ip=$(wget -q "http://ipecho.net/plain" -O publicip; cat publicip; rm publicip)
 Ethernet_controller=$(lspci -Q | grep 'Ethernet controller' | cut -d ':' -f3 | cut -d '(' -f1)
-Ethernetmac=$(ip link show eth0 | grep -i ether | awk '{print$2}')
+Ethernetmac=$(ip a | grep link | cut -d '/' -f2 | sort -u | awk '{print$2}' | sed s'/scope//'g | sed s'/00:00:00:00:00:00//'g | sed -r '/^\s*$/d' | sed ':a;N;$!ba;s/\n/ /g' | awk '{print$1}')
 Network_controller=$(lspci -Q | grep 'Network controller' | cut -d ':' -f3 | cut -d '(' -f1)
-Wlan0mac=$(ip link show wlan0 | grep -i ether | awk '{print$2}')
-Wlanspeed=$(iwconfig wlan0 | grep -i 'Bit Rate' | cut -d '=' -f2 | cut -d 'T' -f1)
+Wlanmac=$(ip a | grep link | cut -d '/' -f2 | sort -u | awk '{print$2}' | sed s'/scope//'g | sed s'/00:00:00:00:00:00//'g | sed -r '/^\s*$/d' | sed ':a;N;$!ba;s/\n/ /g' | awk '{print$2}')
+Wlanspeed=$(iwconfig | grep -i 'Bit Rate' | cut -d '=' -f2 | cut -d 'T' -f1)
+Wlansignal=$(iwconfig | grep -i 'Signal level' | cut -d '=' -f3)
+Wlanfrequency=$(iwconfig | grep -i frequency | cut -d ':' -f3 | awk '{print$1,$2}')
 Apmac=$(iwconfig  2>/dev/null | grep "Access Point" | awk '{print$4,$6}' | sed -e "s/Access//")
-gatewaymac=$(arp $gw | grep -i ether | awk '{print$3}')
+gatewaymac=$(arp $gw | egrep -i '(ether|inet)' | awk '{print$3}')
 Essid=$(iwconfig 2>/dev/null | grep 'ESSID' | awk '{print$4}' | cut -d ':' -f2 | cut -d '"' -f2)
 # End of variables
 
@@ -114,8 +116,10 @@ echo -e "\e[1;31mRouter Essid:\e[0m" $Essid
 echo -e "\e[1;31mAccess Point Mac:\e[0m" $Apmac
 echo -e "\e[1;31mEthernet Mac:\e[0m" $Ethernetmac
 echo -e "\e[1;31mGateway Mac:\e[0m" $gatewaymac
-echo -e "\e[1;31mWlan0 Mac:\e[0m" $Wlan0mac
+echo -e "\e[1;31mWlan Mac:\e[0m" $Wlanmac
 echo -e "\e[1;31mWireless Speed:\e[0m" $Wlanspeed 
+echo -e "\e[1;31mWireless Signal:\e[0m" $Wlansignal 
+echo -e "\e[1;31mWireless Frequency:\e[0m" $Wlanfrequency 
 echo -e "\e[1;31mComputer Name:\e[0m" $Computername
 echo -e "\e[1;31mOS Release:\e[0m" $Os
 echo -e "\e[1;31mOS Codename:\e[0m" $codename
