@@ -1,12 +1,12 @@
 #!/usr/bin/python3
 
-import requests
-import pprint
 import argparse
+import pprint
+import requests
 
-parser = argparse.ArgumentParser(description='A tool to check if your email account has been in a breach By Jay Townsend')
-parser.add_argument('-e', '--email-account', help='Email account to lookup', required=True)
-parser.add_argument('-k', '--api-key', help='Your HIBP API key', required=True)
+parser = argparse.ArgumentParser(description='A tool to check if an email address has been in a breach. By Jay Townsend')
+parser.add_argument('-e', '--email-account', help='Email address to lookup', required=True)
+parser.add_argument('-k', '--api-key', help='HIBP API key', required=True)
 args = parser.parse_args()
 
 headers = {'User-agent': 'Have I been pwn module',
@@ -15,9 +15,9 @@ API = f'https://haveibeenpwned.com/api/v3/breachedaccount/{args.email_account}?t
 request = requests.get(API, headers=headers)
 
 if request.status_code == 404:
-    print('Cannot find your account')
+    print('\nNo results found.')
 elif request.status_code == 401:
-    print('Access denied due to improperly formed hibp-api-key')
+    print('\n[!] Improperly formated API key.')
 else:
     entries = request.json()
     for entry in entries:
