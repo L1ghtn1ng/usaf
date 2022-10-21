@@ -10,7 +10,7 @@ parser.add_argument('-k', '--api-key', help='Your HIBP API key', required=True)
 args = parser.parse_args()
 
 headers = {'User-agent': 'Have I been pwn module',
-           f'hibp-api-key': {args.api_key}}
+           f'hibp-api-key': '{args.api_key}'}
 API = f'https://haveibeenpwned.com/api/v3/breachedaccount/{args.email_account}'
 request = requests.get(API, headers=headers)
 
