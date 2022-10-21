@@ -10,12 +10,14 @@ parser.add_argument('-k', '--api-key', help='Your HIBP API key', required=True)
 args = parser.parse_args()
 
 headers = {'User-agent': 'Have I been pwn module',
-           f'hibp-api-key': '{args.api_key}'}
-API = f'https://haveibeenpwned.com/api/v3/breachedaccount/{args.email_account}'
+           f'hibp-api-key': args.api_key}
+API = f'https://haveibeenpwned.com/api/v3/breachedaccount/{args.email_account}?truncateResponse=false'
 request = requests.get(API, headers=headers)
 
 if request.status_code == 404:
     print('Cannot find your account')
+elif request.status_code == 401:
+    print('Access denied due to improperly formed hibp-api-key')
 else:
     entries = request.json()
     for entry in entries:
@@ -25,4 +27,4 @@ else:
         pprint.pprint(entry['Description'])
         print('IsSensitive:', entry['IsSensitive'])
         print('IsVerified:', entry['IsVerified'])
-        print('PwnCount:', entry['PwnCount'])
+        print('PwnCount:', entry['PwnCount'], '\n')
