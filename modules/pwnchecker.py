@@ -6,10 +6,12 @@ import argparse
 
 parser = argparse.ArgumentParser(description='A tool to check if your email account has been in a breach By Jay Townsend')
 parser.add_argument('-e', '--email-account', help='Email account to lookup', required=True)
+parser.add_argument('-k', '--api-key', help='Your HIBP API key', required=True)
 args = parser.parse_args()
 
-headers = {'User-agent': 'Have I been pwn module'}
-API = 'https://haveibeenpwned.com/api/v2/breachedaccount/{0}'.format(args.email_account)
+headers = {'User-agent': 'Have I been pwn module',
+           f'hibp-api-key': {args.api_key}}
+API = f'https://haveibeenpwned.com/api/v3/breachedaccount/{args.email_account}'
 request = requests.get(API, headers=headers)
 
 if request.status_code == 404:
